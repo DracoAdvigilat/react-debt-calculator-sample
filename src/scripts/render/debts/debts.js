@@ -29,8 +29,6 @@ class Debts extends React.Component {
 
   render() {
 
-    console.log(this.props.debts)
-
     const debts = this.props.debts.map(debt => {
 
       const uid = debt.uid

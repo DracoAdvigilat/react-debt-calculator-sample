@@ -11,9 +11,9 @@ export default function trySetAllocation(method) {
         break
 
       default:
-        return null
+        return
     }
 
-    return { 'type': `setAllocationMethod`, method }
+    dispatch({ 'type': `setAllocationMethod`, method })
   }
 }

@@ -11,9 +11,9 @@ export default function trySetPrioritization(method) {
         break
 
       default:
-        return null
+        return
     }
 
-    return { 'type': `setPrioritizationMethod`, method }
+    dispatch({ 'type': `setPrioritizationMethod`, method })
   }
 }

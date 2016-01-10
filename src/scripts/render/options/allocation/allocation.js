@@ -23,8 +23,9 @@ class Allocation extends React.Component {
 
   render() {
 
-    const handleChangeAllocation = event =>
+    const handleChangeAllocation = event => {
       this.props.handleChangeAllocation(event.target.value)
+    }
 
     return (
       <div className="allocationDiv">

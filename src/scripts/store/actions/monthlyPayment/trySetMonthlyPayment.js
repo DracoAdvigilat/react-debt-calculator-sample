@@ -5,19 +5,24 @@ export default function trySetMonthlyPayments(requestedAmount) {
 
   return function(dispatch, getState) {
 
+    let amount
+
     if (requestedAmount === ``)
-      return { 'type': `setMonthlyPayment`, 'amount': null }
+      amount = null
+    else {
 
-    let amount = Number(requestedAmount)
+      amount = Number(requestedAmount)
 
-    if (isNaN(amount))
-      return null
+      if (isNaN(amount))
+        return
 
-    amount = roundToTwoDecimals(amount)
+      amount = roundToTwoDecimals(amount)
 
-    if (amount < 0.0)
-      return null
+      if (amount < 0.0)
+        return
 
-    return { 'type': `setMonthlyPayment`, amount }
+    }
+
+    dispatch({ 'type': `setMonthlyPayment`, amount })
   }
 }

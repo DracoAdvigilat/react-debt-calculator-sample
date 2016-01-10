@@ -195,9 +195,7 @@ function mapStateToProps(state) {
 
   let monthlyPayment = state.monthlyPayment
 
-  if (monthlyPayment === null)
-    monthlyPayment = ``
-  else
+  if (typeof monthlyPayment === `number`)
     monthlyPayment = monthlyPayment.toFixed(2)
 
   const debts = state.debts
@@ -207,7 +205,7 @@ function mapStateToProps(state) {
 
   let paymentMessage = ``
 
-  if (monthsToPay === 0)
+  if (monthlyPayment === null || monthsToPay === 0)
     paymentMessage = ``
 
   else if (monthsToPay === FOREVER)
@@ -253,7 +251,7 @@ export default class PayoffMessage extends React.Component {
 
     return (
       <div>
-        <p className="payoffMessageP"></p>
+        <p className="payoffMessageP">{this.props.paymentMessage}</p>
       </div>
     )
   }
