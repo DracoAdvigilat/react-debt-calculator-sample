@@ -8,16 +8,21 @@ function getNewUid() {
   // There's no reason this should ever happen. Ever. But just in case...
   while (counter < limit) {
 
-    const newUid = Math.random().toString(36).substr(2, 9)
+    const lettersAndNumbers = 36
+    const start = 2
+    const length = 9
 
-    if (!usedUids.has(newUid)) {
+    const uid = Math.random().toString(lettersAndNumbers).substr(start, length)
 
-      usedUids.add(newUid)
-      return newUid
+    if (!usedUids.has(uid)) {
+
+      usedUids.add(uid)
+      return uid
     }
   }
 
-  throw new Error(`getNewUid(): Failed over ${limit} times to find a new unique id.Statistically, this makes no sense. Something's broken.`)
+  throw new Error(`getNewUid(): Failed over ${limit} times to find a new unique
+    id.Statistically, this makes no sense. Something's broken.`)
 }
 
 function getNewDebt() {

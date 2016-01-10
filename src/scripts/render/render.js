@@ -21,7 +21,8 @@ export default class DebtCalculator extends React.Component {
           {`Debt Repayment Calculator`}
         </header>
         <p className="instructionsP">
-          {`Enter the amount owed, APR, and minimum monthly payment for each debt.`}
+          {`Enter the amount owed, APR, and minimum monthly payment for each
+            debt.`}
         </p>
   
         <Debts />
@@ -31,7 +32,10 @@ export default class DebtCalculator extends React.Component {
         <PayoffMessage />
 
         <p className="disclaimerP">
-          {`Disclaimer: Every loan is different. While this tool provides a reasonable estimation, it can not account for all fees, charges, policies, and other possibilities. For a full debt repayment analysis, consult a financial planner.`}
+          {`Disclaimer: Every loan is different. While this tool provides a
+            reasonable estimation, it can not account for all fees, charges,
+            policies, and other possibilities. For a full debt repayment
+            analysis, consult a financial planner.`}
         </p>
       </div>
     )

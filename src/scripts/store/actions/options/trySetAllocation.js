@@ -1,7 +1,7 @@
 
-export default function trySetAllocation(method) {
+export default function trySetAllocationThunk(method) {
 
-  return function(dispatch, getState) {
+  return function trySetAllocation(dispatch) {
 
     switch (method) {
 

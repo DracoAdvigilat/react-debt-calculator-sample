@@ -1,7 +1,7 @@
 
-export default function trySetPrioritization(method) {
+export default function trySetPrioritizationThunk(method) {
 
-  return function(dispatch, getState) {
+  return function trySetPrioritization(dispatch) {
 
     switch (method) {
 

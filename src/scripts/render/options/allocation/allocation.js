@@ -40,4 +40,9 @@ class Allocation extends React.Component {
   }
 }
 
+Allocation.propTypes = {
+  'handleChangeAllocation': React.PropTypes.func.isRequired,
+  'selected'              : React.PropTypes.string.isRequired,
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Allocation)

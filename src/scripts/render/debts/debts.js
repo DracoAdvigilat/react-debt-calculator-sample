@@ -105,4 +105,19 @@ class Debts extends React.Component {
   }
 }
 
+Debts.propTypes = {
+  
+  'handleClickDelete'  : React.PropTypes.func.isRequired,
+  'handleChangeOwed'   : React.PropTypes.func.isRequired,
+  'handleChangeApr'    : React.PropTypes.func.isRequired,
+  'handleChangeMonthly': React.PropTypes.func.isRequired,
+
+  'debts':
+    React.PropTypes.arrayOf(
+      React.PropTypes.objectOf(
+        React.PropTypes.string
+      )
+    ).isRequired,
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Debts)

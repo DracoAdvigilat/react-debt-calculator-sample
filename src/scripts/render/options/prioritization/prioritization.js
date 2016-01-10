@@ -3,7 +3,8 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 
-import trySetPrioritization from '../../../store/actions/options/trySetPrioritization'
+import trySetPrioritization
+  from '../../../store/actions/options/trySetPrioritization'
 
 function mapStateToProps(state) {
 
@@ -29,7 +30,10 @@ class Prioritization extends React.Component {
     return (
       <div className="prioritizationDiv">
         <p>{`Prioritization`}</p>
-        <select onChange={handleChangePrioritization} value={this.props.selected}>
+        <select
+          onChange={handleChangePrioritization}
+          value={this.props.selected}
+        >
           <option value="HIGHEST_APR">{`Highest APR`}</option>
           <option value="LOWEST_OWED">{`Lowest owed`}</option>
           <option value="AS_ENTERED">{`As listed`}</option>
@@ -37,6 +41,11 @@ class Prioritization extends React.Component {
       </div>
     )
   }
+}
+
+Prioritization.propTypes = {
+  'handleChangePrioritization': React.PropTypes.func.isRequired,
+  'selected'                  : React.PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prioritization)

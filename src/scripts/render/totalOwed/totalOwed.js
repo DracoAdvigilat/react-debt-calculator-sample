@@ -36,4 +36,8 @@ class TotalOwed extends React.Component {
   }
 }
 
+TotalOwed.propTypes = {
+  'totalOwed': React.PropTypes.string.isRequired,
+}
+
 export default connect(mapStateToProps)(TotalOwed)

@@ -1,7 +1,7 @@
 
-export default function trySetDebtApr(uid, amount) {
+export default function trySetDebtAprThunk(uid, amount) {
 
-  return function(dispatch, getState) {
+  return function trySetDebtApr(dispatch, getState) {
 
     const key = `apr`
 

@@ -3,7 +3,8 @@ import React from 'react'
 
 import { connect } from 'react-redux'
 
-import trySetMonthlyPayment from '../../store/actions/monthlyPayment/trySetMonthlyPayment'
+import trySetMonthlyPayment
+  from '../../store/actions/monthlyPayment/trySetMonthlyPayment'
 
 function mapStateToProps(state) {
 
@@ -13,7 +14,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  'handleChangeMonthlyPayment': trySetMonthlyPayment
+  'handleChangeMonthlyPayment': trySetMonthlyPayment,
 }
 
 class MonthlyPayment extends React.Component {
@@ -39,6 +40,11 @@ class MonthlyPayment extends React.Component {
       </div>
     )
   }
+}
+
+MonthlyPayment.propTypes = {
+  'handleChangeMonthlyPayment': React.PropTypes.func.isRequired,
+  'monthlyPayment'            : React.PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MonthlyPayment)

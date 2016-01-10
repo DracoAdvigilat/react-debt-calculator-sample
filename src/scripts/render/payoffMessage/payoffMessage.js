@@ -61,20 +61,21 @@ function getStillOwed(debts) {
 function getMonthsToPayDebts(state) {
 
   const monthlyPayment = Number(state.monthlyPayment)
-  const allDebts = state.debts
   const allocationMethod = state.options.allocation
+
+  let debts = getSortedDebts(state)
+
+  const monthlyMinimum = debts.reduce(
+    (total, debt) => total + Number(debt.monthly), 0
+  )
 
   // Don't even bother calculating if we're not paying
   if (monthlyPayment === 0)
     return 0
 
-  const allMonthly = allDebts.reduce((total, debt) => total + Number(debt.monthly), 0)
-
   // We're not even covering the monthly minimum! It would take forever
-  if (monthlyPayment < allMonthly)
+  if (monthlyPayment < monthlyMinimum)
     return FOREVER
-
-  let debts = getSortedDebts(state)
 
   let months = 0
 
@@ -87,9 +88,14 @@ function getMonthsToPayDebts(state) {
     for (let i = 0; i < debts.length; i++) {
       const debt = debts[i]
 
-      const monthlyInterest = 1.0 + (debt.apr / 1200.0)
+      const apr = debt.apr
 
-      debt.owed *= monthlyInterest
+      const monthsInYear = 12.0
+      const percentToDecimal = 100.0
+
+      const interest = (apr / monthsInYear) / percentToDecimal
+
+      debt.owed = debt.owed + (debt.owed * interest)
       debt.owed = roundToTwoDecimals(debt.owed)
     }
 
@@ -98,7 +104,7 @@ function getMonthsToPayDebts(state) {
     let surplus = monthlyPayment - monthlyTotal
 
     // Handle minimum monthly payments first
-    debts.forEach(debt => {
+    debts.forEach(debt => { // eslint-disable-line no-loop-func
 
       const payment = debt.monthly
       const remaining = debt.owed
@@ -147,7 +153,7 @@ function getMonthsToPayDebts(state) {
       }
 
       // Main payment loop
-      debts.forEach(debt => {
+      debts.forEach(debt => { // eslint-disable-line no-loop-func
 
         // In-loop surplus payment information setup
         switch (allocationMethod) {
@@ -203,7 +209,9 @@ function mapStateToProps(state) {
     monthlyPayment = Number(monthlyPayment).toFixed(2)
 
   const debts = state.debts
-  const totalMonthly = debts.reduce((total, debt) => total + Number(debt.monthly), 0).toFixed(2)
+  const totalMonthly = debts.reduce(
+    (total, debt) => total + Number(debt.monthly), 0
+  ).toFixed(2)
   
   const monthsToPay = getMonthsToPayDebts(state)
 
@@ -212,13 +220,17 @@ function mapStateToProps(state) {
   if (monthlyPayment === null || monthsToPay === 0)
     paymentMessage = ``
 
-  else if (monthsToPay === FOREVER)
-    paymentMessage = `Be sure to enter an amount at least as high as the total minimum monthly payment of ${totalMonthly}.`
+  else if (monthsToPay === FOREVER) {
 
-  else if (monthsToPay >= hundredYearsInMonths)
-    paymentMessage = `By paying ${monthlyPayment} every month, it will take over 100 years to pay off all of your debts!`
+    paymentMessage = `Be sure to enter an amount at least as high as the total
+      minimum monthly payment of ${totalMonthly}.`
 
-  else {
+  } else if (monthsToPay >= hundredYearsInMonths) {
+
+    paymentMessage = `By paying ${monthlyPayment} every month, it will take over
+      100 years to pay off all of your debts!`
+
+  } else {
 
     const message = []
 
@@ -227,7 +239,8 @@ function mapStateToProps(state) {
     const years = Math.floor(monthsToPay / monthsInYear)
     const months = monthsToPay % monthsInYear
 
-    message.push(`By paying ${monthlyPayment} every month, it will take roughly `)
+    message.push(`By paying ${monthlyPayment} every month, it will take
+      roughly `)
 
     if (years > 0)
       message.push(`${years} year${years > 1 ? `s` : ``} `)
@@ -246,7 +259,7 @@ function mapStateToProps(state) {
   return { paymentMessage }
 }
 
-export default class PayoffMessage extends React.Component {
+class PayoffMessage extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -259,6 +272,10 @@ export default class PayoffMessage extends React.Component {
       </div>
     )
   }
+}
+
+PayoffMessage.propTypes = {
+  'paymentMessage': React.PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(PayoffMessage)

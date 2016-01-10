@@ -1,7 +1,7 @@
 
-export default function trySetDebtOwed(uid, amount) {
+export default function trySetDebtOwedThunk(uid, amount) {
 
-  return function(dispatch, getState) {
+  return function trySetDebtOwed(dispatch, getState) {
 
     const key = `owed`
 

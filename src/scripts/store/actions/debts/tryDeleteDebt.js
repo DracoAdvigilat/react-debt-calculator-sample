@@ -1,7 +1,7 @@
-``
-export default function tryDeleteDebt(uid) {
 
-  return function(dispatch, getState) {
+export default function tryDeleteDebtThunk(uid) {
+
+  return function tryDeleteDebt(dispatch, getState) {
 
     let debts = getState().debts
 

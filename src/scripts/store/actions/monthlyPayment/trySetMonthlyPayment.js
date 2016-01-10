@@ -1,7 +1,7 @@
 
-export default function trySetMonthlyPayments(amount) {
+export default function trySetMonthlyPaymentThunk(amount) {
 
-  return function(dispatch, getState) {
+  return function trySetMonthlyPayment(dispatch) {
 
     if (amount.match(/^\d*\.?\d{0,2}$/) === null)
       return

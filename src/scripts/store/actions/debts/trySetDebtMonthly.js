@@ -1,7 +1,7 @@
 
-export default function trySetDebtMonthly(uid, amount) {
+export default function trySetDebtMonthlyThunk(uid, amount) {
 
-  return function(dispatch, getState) {
+  return function trySetDebtMonthly(dispatch, getState) {
 
     const key = `monthly`
 
