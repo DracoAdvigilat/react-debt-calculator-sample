@@ -14,10 +14,14 @@ function getSortedDebts(state) {
   const prioritizationMethod = state.prioritization
 
   // Filter by all debts that have a positive amount owed
-  // Then copy them so that we don't overwrite anything
+  // Then create a copy with true numbers instead of strings
   const owedDebts = debts
-    .filter(debt => debt.owed > 0)
-    .map(debt => Object.assign({}, debt))
+    .filter(debt => Number(debt.owed) > 0)
+    .map(debt => ({
+      'owed'   : Number(debt.owed),
+      'apr'    : Number(debt.apr),
+      'monthly': Number(debt.monthly),
+    }))
 
   switch (prioritizationMethod) {
 
@@ -56,7 +60,7 @@ function getStillOwed(debts) {
 
 function getMonthsToPayDebts(state) {
 
-  const monthlyPayment = state.monthlyPayment
+  const monthlyPayment = Number(state.monthlyPayment)
   const allDebts = state.debts
   const allocationMethod = state.options.allocation
 
@@ -64,7 +68,7 @@ function getMonthsToPayDebts(state) {
   if (monthlyPayment === 0)
     return 0
 
-  const allMonthly = allDebts.reduce((total, debt) => total + debt.monthly, 0)
+  const allMonthly = allDebts.reduce((total, debt) => total + Number(debt.monthly), 0)
 
   // We're not even covering the monthly minimum! It would take forever
   if (monthlyPayment < allMonthly)
@@ -195,11 +199,11 @@ function mapStateToProps(state) {
 
   let monthlyPayment = state.monthlyPayment
 
-  if (typeof monthlyPayment === `number`)
-    monthlyPayment = monthlyPayment.toFixed(2)
+  if (monthlyPayment !== ``)
+    monthlyPayment = Number(monthlyPayment).toFixed(2)
 
   const debts = state.debts
-  const totalMonthly = debts.reduce((total, debt) => total + debt.monthly, 0)
+  const totalMonthly = debts.reduce((total, debt) => total + Number(debt.monthly), 0).toFixed(2)
   
   const monthsToPay = getMonthsToPayDebts(state)
 

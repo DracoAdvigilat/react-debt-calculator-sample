@@ -23,9 +23,9 @@ function getNewUid() {
 function getNewDebt() {
   return {
     'uid'    : getNewUid(),
-    'owed'   : null,
-    'apr'    : null,
-    'monthly': null,
+    'owed'   : ``,
+    'apr'    : ``,
+    'monthly': ``,
   }
 }
 

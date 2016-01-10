@@ -1,27 +1,10 @@
 
-const roundToTwoDecimals = num => Number(`${Math.round(`${num}e+2`)}e-2`)
-
-export default function trySetMonthlyPayments(requestedAmount) {
+export default function trySetMonthlyPayments(amount) {
 
   return function(dispatch, getState) {
 
-    let amount
-
-    if (requestedAmount === ``)
-      amount = null
-    else {
-
-      amount = Number(requestedAmount)
-
-      if (isNaN(amount))
-        return
-
-      amount = roundToTwoDecimals(amount)
-
-      if (amount < 0.0)
-        return
-
-    }
+    if (amount.match(/^\d*\.?\d{0,2}$/) === null)
+      return
 
     dispatch({ 'type': `setMonthlyPayment`, amount })
   }

@@ -7,8 +7,10 @@ function mapStateToProps(state) {
 
   const debts = state.debts
 
-  const totalOwed = debts.reduce((total, debt) => total + debt.owed, 0)
+  let totalOwed = debts.reduce((total, debt) => total + Number(debt.owed), 0)
 
+  totalOwed = totalOwed.toFixed(2)
+  
   return {
     totalOwed,
   }

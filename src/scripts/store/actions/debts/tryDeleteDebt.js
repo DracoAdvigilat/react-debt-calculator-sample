@@ -1,4 +1,4 @@
-
+``
 export default function tryDeleteDebt(uid) {
 
   return function(dispatch, getState) {
@@ -15,7 +15,7 @@ export default function tryDeleteDebt(uid) {
     debts = getState().debts
 
     const hasEmptyDebts = debts.some(
-      debt => debt.apr === null && debt.owed === null && debt.monthly === null
+      debt => debt.apr === `` && debt.owed === `` && debt.monthly === ``
     )
 
     if (!hasEmptyDebts)

@@ -1,5 +1,5 @@
 
-export default function trySetDebtApr(uid, requestedAmount) {
+export default function trySetDebtApr(uid, amount) {
 
   return function(dispatch, getState) {
 
@@ -12,29 +12,15 @@ export default function trySetDebtApr(uid, requestedAmount) {
     if (!debtExists)
       return
 
-    let amount
-
-    if (requestedAmount === ``)
-      amount = null
-
-    else {
-
-      amount = Number(requestedAmount)
-
-      if (isNaN(amount))
-        return
-
-      if (amount < 0.0)
-        return
-      
-    }
+    if (amount.match(/^\d*\.?\d*$/) === null)
+      return
 
     dispatch({ 'type': `changeDebt`, uid, key, 'value': amount })
 
     debts = getState().debts
 
     const hasEmptyDebts = debts.some(
-      debt => debt.apr === null && debt.owed === null && debt.monthly === null
+      debt => debt.apr === `` && debt.owed === `` && debt.monthly === ``
     )
 
     if (!hasEmptyDebts)
