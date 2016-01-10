@@ -1,4 +1,7 @@
 
+/* global module, process */
+/* eslint-disable no-process-env */
+
 function getEntrySources(sources) {
   'use strict'
 
